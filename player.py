@@ -10,10 +10,9 @@ class Player(pygame.sprite.Sprite):
         #self.image = pygame.Surface((30, 40))
         #self.image.fill(YELLOW)
         self.load_image()
-        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
-        self.rect.center = (WIDTH / 2, HEIGHT / 2)
-        self.pos = vec(WIDTH / 2, HEIGHT / 2)
+        self.rect.center = (WIDTH / 2, HEIGHT - 60)
+        self.pos = vec(WIDTH / 2, HEIGHT - 60)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
@@ -35,6 +34,10 @@ class Player(pygame.sprite.Sprite):
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
 
+        # jump
+        if keys[pygame.K_SPACE]:
+            self.jump()
+
         # wrap around the sides of the screen
         if self.pos.x > WIDTH:
             self.pos.x = 0
@@ -42,3 +45,6 @@ class Player(pygame.sprite.Sprite):
             self.pos.x = WIDTH
 
         self.rect.center = self.pos
+
+    def jump(self):
+        self.pos.y -= 10
