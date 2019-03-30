@@ -1,0 +1,14 @@
+
+
+WIDTH = 800
+HEIGHT = 600
+
+FPS = 30
+
+BLACK = 0, 0, 0
+BLUE = 0, 0, 255
+YELLOW = 255, 255, 0
+
+# Player properties
+PLAYER_ACC = 0.5
+PLAYER_FRICTION = -0.12
