@@ -3,7 +3,9 @@
 import pygame
 from params import *
 from player import *
+from platform import *
 from img_utils import *
+import os
 
 class Game(object):
 
@@ -14,14 +16,15 @@ class Game(object):
         pygame.display.set_caption("My Game")
         self.clock = pygame.time.Clock()
         self.running = True
-        self.spritesheet = Spritesheet('D:\\Enzo\\SundaySchool\\Sunday_Python\\' +
-                                       'Game\\img\\p1_spritesheet.png')
+        self.spritesheet = Spritesheet(os.path.join(img_folder, 'p1_spritesheet.png'))
 
     def new(self):
         # start a new game
         self.all_sprites = pygame.sprite.Group()
         self.player = Player(self)
         self.all_sprites.add(self.player)
+        self.platform_1 = Platform(300, 200, 50, self)
+        self.all_sprites.add(self.platform_1)
         self.run()
 
     def run(self):
