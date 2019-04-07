@@ -16,7 +16,12 @@ class Game(object):
         pygame.display.set_caption("My Game")
         self.clock = pygame.time.Clock()
         self.running = True
+<<<<<<< HEAD
         self.spritesheet = Spritesheet(os.path.join(img_folder, 'p1_spritesheet.png'))
+=======
+        self.spritesheet = Spritesheet(os.path.join(img_folder,
+                                                    "p1_spritesheet.png"))
+>>>>>>> 022362536a169921d0af6cfedcdfa30a6c314659
 
     def new(self):
         # start a new game
