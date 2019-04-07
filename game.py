@@ -3,6 +3,7 @@
 import pygame
 from params import *
 from player import *
+from platform import Platform
 from img_utils import *
 
 class Game(object):
@@ -16,12 +17,17 @@ class Game(object):
         self.running = True
         self.spritesheet = Spritesheet(os.path.join(img_folder,
                                                     "p1_spritesheet.png"))
+        self.ground = Platform(0, HEIGHT - 40, WIDTH, 40, self)
 
     def new(self):
         # start a new game
         self.all_sprites = pygame.sprite.Group()
         self.player = Player(self)
         self.all_sprites.add(self.player)
+
+        self.platforms = pygame.sprite.Group()
+        self.platforms.add(self.ground,
+                           Platform(50, HEIGHT - 100, 200, 40, self))
         self.run()
 
     def run(self):
@@ -39,6 +45,7 @@ class Game(object):
 
             # Draw / render
             self.screen.fill(BLUE)
+            self.platforms.draw(self.screen)
             self.all_sprites.draw(self.screen)
 
             # *after* drawing everything, flip the display

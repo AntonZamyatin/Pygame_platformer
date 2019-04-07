@@ -13,3 +13,9 @@ class Spritesheet():
                                                height // koef_scale))
         """
         return self.spritesheet.subsurface(x, y, width, height)
+
+    def get_image_list(self, rect_list):
+        image_list = []
+        for rect in rect_list:
+            image_list.append(self.spritesheet.subsurface(rect))
+        return image_list
