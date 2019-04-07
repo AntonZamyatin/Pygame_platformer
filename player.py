@@ -11,12 +11,22 @@ class Player(pygame.sprite.Sprite):
         #self.image.fill(YELLOW)
         self.load_image()
         self.rect = self.image.get_rect()
-        self.rect.center = (WIDTH / 2, HEIGHT - 60)
-        self.pos = vec(WIDTH / 2, HEIGHT - 60)
+        self.rect.center = (WIDTH / 2, HEIGHT / 2)
+        self.pos = vec(WIDTH / 2, HEIGHT / 2)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
-        self.on_ground = True
+        self.on_ground = False
+        self.idle = True
+
+        # animation lists
+        self.last_update = 0
+        self.idle_frame = 0
+        idle_list_rects = [(0, 191, 67, 95),
+                           (67, 191, 67, 95)]
+        self.idle_list = self.game.spritesheet.get_image_list(idle_list_rects)
+        self.idle_list += [self.idle_list[0],
+                           pygame.transform.flip(self.idle_list[1], True, False)]
 
     def load_image(self):
         self.image = self.game.spritesheet.get_image(0, 0, 72, 95)
@@ -53,13 +63,23 @@ class Player(pygame.sprite.Sprite):
             self.pos.x = WIDTH
 
         # check ground
-        if self.pos.y >= HEIGHT - 60:
+        cur_plat = pygame.sprite.spritecollide(self, self.game.platforms, False)
+        if cur_plat:
             self.on_ground = True
             self.vel.y = 0
-            self.pos.y = HEIGHT - 60
+            self.pos.y = cur_plat[0].rect.top
 
-        self.rect.center = self.pos
+        self.rect.midbottom = self.pos
+        self.animate()
 
     def jump(self):
         self.on_ground = False
         self.acc.y = -20
+
+    def animate(self):
+        now = pygame.time.get_ticks()
+        if self.idle:
+            if now - self.last_update > 300:
+                self.last_update = now
+                self.idle_frame = (self.idle_frame + 1) % 4
+                self.image = self.idle_list[self.idle_frame]
