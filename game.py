@@ -1,10 +1,12 @@
 """Best game ever."""
 
-import pygame
 from params import *
+import numpy as np
+import pygame
 from player import *
 from platform import Platform
 from img_utils import *
+from level_map import *
 
 class Game(object):
 
@@ -25,9 +27,9 @@ class Game(object):
         self.player = Player(self)
         self.all_sprites.add(self.player)
 
-        self.platforms = pygame.sprite.Group()
-        self.platforms.add(self.ground,
-                           Platform(50, HEIGHT - 100, 200, 40, self))
+        lmap = Level_map("lvl1.txt")
+        self.platforms = lmap.get_sprites()
+
         self.run()
 
     def run(self):
