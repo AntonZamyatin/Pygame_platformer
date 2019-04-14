@@ -68,7 +68,7 @@ class Player(pygame.sprite.Sprite):
         if cur_plat:
             self.on_ground = True
             self.vel.y = 0
-            self.pos.y = cur_plat[0].rect.top + self.game.screen_offset.y
+            self.pos.y = cur_plat[0].rect.top + (cur_plat[0].pos.y - cur_plat[0].rect.centery)
 
         screen_offset = vec(0, 0)
         if self.pos.x > WIDTH / 2:
@@ -84,8 +84,7 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.midbottom = self.pos - screen_offset
         for sprite in self.game.platforms:
-            sprite.rect.center += self.game.screen_offset - screen_offset
-        self.game.screen_offset = screen_offset
+            sprite.rect.center = sprite.pos - screen_offset
 
 
         self.animate()

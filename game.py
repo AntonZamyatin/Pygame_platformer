@@ -19,7 +19,6 @@ class Game(object):
         self.running = True
         self.spritesheet = Spritesheet(os.path.join(img_folder, "p1_spritesheet.png"))
         self.ground = Platform(0, HEIGHT - 40, WIDTH, 40, self)
-        self.screen_offset = vec(0,0)
 
     def new(self):
         # start a new game
