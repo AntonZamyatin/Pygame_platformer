@@ -8,6 +8,7 @@ from platform import Platform
 from img_utils import *
 from level_map import *
 
+
 class Game(object):
 
     def __init__(self):
@@ -27,8 +28,9 @@ class Game(object):
         self.player = Player(self)
         self.all_sprites.add(self.player)
 
-        lmap = Level_map("lvl1.txt")
-        self.platforms = lmap.get_sprites()
+        self.lmap = Level_map(os.path.join(game_folder, "lvl1.txt"))
+        self.platforms = self.lmap.get_sprites()
+
 
         self.run()
 

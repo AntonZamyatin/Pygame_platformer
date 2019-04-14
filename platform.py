@@ -1,5 +1,6 @@
 import pygame
 from params import *
+vec = pygame.math.Vector2
 
 class Platform(pygame.sprite.Sprite):
 
@@ -11,3 +12,4 @@ class Platform(pygame.sprite.Sprite):
         #self.load_image()
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
+        self.pos = vec(self.rect.centerx, self.rect.centery)
