@@ -11,8 +11,9 @@ class Player(pygame.sprite.Sprite):
         #self.image.fill(YELLOW)
         self.load_image()
         self.rect = self.image.get_rect()
-        self.rect.center = (WIDTH / 2, HEIGHT / 2)
-        self.pos = vec(WIDTH / 2, HEIGHT / 2)
+        self.rect.center = (WIDTH / 2, 0)
+        self.pos = vec(WIDTH / 2, 0)
+
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
@@ -63,13 +64,37 @@ class Player(pygame.sprite.Sprite):
         self.pos += self.vel + 0.5 * self.acc
 
         # wrap around the sides of the screen
-        if self.pos.x > WIDTH:
+        '''if self.pos.x > WIDTH:
             self.pos.x = 0
         if self.pos.x < 0:
-            self.pos.x = WIDTH
+            self.pos.x = WIDTH  #'''
 
-        self.rect.midbottom = self.pos
+        '''# check ground
+        cur_plat = pygame.sprite.spritecollide(self, self.game.platforms, False)
+        if cur_plat:
+            self.on_ground = True
+            self.vel.y = 0
+            self.pos.y = cur_plat[0].rect.top + (cur_plat[0].pos.y - cur_plat[0].rect.centery)'''
+
+        screen_offset = vec(0, 0)
+        if self.pos.x > WIDTH / 2:
+            screen_offset.x = int(self.pos.x - WIDTH / 2)
+        if self.pos.x > len(self.game.lmap.level_array[0])*20 - WIDTH / 2:
+            screen_offset.x = int(len(self.game.lmap.level_array[0])*20 - WIDTH)
+
+        if self.pos.y > HEIGHT / 2:
+            screen_offset.y = int(self.pos.y - HEIGHT / 2)
+        if self.pos.y > len(self.game.lmap.level_array)*20 - HEIGHT / 2:
+            screen_offset.y = int(len(self.game.lmap.level_array)*20 - HEIGHT)  #'''
+
+
+        self.rect.midbottom = self.pos - screen_offset
+        for sprite in self.game.platforms:
+            sprite.rect.center = sprite.pos - screen_offset
+
+
         self.animate()
+
 
     def is_on_ground(self):
         self.pos.y += self.vel.y + 0.5 * self.acc.y + 1

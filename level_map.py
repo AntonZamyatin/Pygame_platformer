@@ -14,7 +14,6 @@ class Level_map():
                 for el in line.strip():
                     mapar[i].append(int(el))
                 i += 1
-
         self.level_array = np.array(mapar)
 
     def get_sprites(self):
@@ -24,3 +23,4 @@ class Level_map():
                 if self.level_array[x, y] == 1:
                     platforms_group.add(Platform(y * 20, x * 20, 20, 20, self))
         return platforms_group
+
