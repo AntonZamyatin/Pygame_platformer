@@ -13,6 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH / 2, 0)
         self.pos = vec(WIDTH / 2, 0)
+
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
@@ -32,11 +33,14 @@ class Player(pygame.sprite.Sprite):
         self.image = self.game.spritesheet.get_image(0, 0, 72, 95)
 
     def update(self):
-        '''        if self.on_ground:
-            self.acc = vec(0, 0)
-        else:
-            self.acc = vec(0, GRAVITY_ACC)  '''
         self.acc = vec(0, GRAVITY_ACC)
+
+        # check ground
+        hit = self.is_on_ground()
+        if hit:
+            self.on_ground = True
+            self.vel.y = 0
+            self.pos.y = hit[0].rect.top
 
         keys = pygame.key.get_pressed()
         if self.on_ground:
@@ -55,6 +59,8 @@ class Player(pygame.sprite.Sprite):
 
         # equations of motion
         self.vel += self.acc
+        if abs(self.vel.x) < 0.1:
+            self.vel.x = 0
         self.pos += self.vel + 0.5 * self.acc
 
         # wrap around the sides of the screen
@@ -63,12 +69,12 @@ class Player(pygame.sprite.Sprite):
         if self.pos.x < 0:
             self.pos.x = WIDTH  #'''
 
-        # check ground
+        '''# check ground
         cur_plat = pygame.sprite.spritecollide(self, self.game.platforms, False)
         if cur_plat:
             self.on_ground = True
             self.vel.y = 0
-            self.pos.y = cur_plat[0].rect.top + (cur_plat[0].pos.y - cur_plat[0].rect.centery)
+            self.pos.y = cur_plat[0].rect.top + (cur_plat[0].pos.y - cur_plat[0].rect.centery)'''
 
         screen_offset = vec(0, 0)
         if self.pos.x > WIDTH / 2:
@@ -88,6 +94,14 @@ class Player(pygame.sprite.Sprite):
 
 
         self.animate()
+
+
+    def is_on_ground(self):
+        self.pos.y += self.vel.y + 0.5 * self.acc.y + 1
+        hit = pygame.sprite.spritecollide(self, self.game.platforms, False)
+        self.pos.y -= self.vel.y + 0.5 * self.acc.y + 1
+        return hit
+
 
     def jump(self):
         self.on_ground = False
