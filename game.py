@@ -1,10 +1,12 @@
 """Best game ever."""
-
-import pygame
 from params import *
+import numpy as np
+import pygame
 from player import *
 from platform import Platform
 from img_utils import *
+from level_map import *
+vec = pygame.math.Vector2
 
 class Game(object):
 
@@ -15,9 +17,9 @@ class Game(object):
         pygame.display.set_caption("My Game")
         self.clock = pygame.time.Clock()
         self.running = True
-        self.spritesheet = Spritesheet(os.path.join(img_folder,
-                                                    "p1_spritesheet.png"))
+        self.spritesheet = Spritesheet(os.path.join(img_folder, "p1_spritesheet.png"))
         self.ground = Platform(0, HEIGHT - 40, WIDTH, 40, self)
+        self.screen_offset = vec(0,0)
 
     def new(self):
         # start a new game
@@ -25,9 +27,9 @@ class Game(object):
         self.player = Player(self)
         self.all_sprites.add(self.player)
 
-        self.platforms = pygame.sprite.Group()
-        self.platforms.add(self.ground,
-                           Platform(50, HEIGHT - 100, 200, 40, self))
+        self.lmap = Level_map(os.path.join(game_folder, "lvl1.txt"))
+        self.platforms = self.lmap.get_sprites()
+
         self.run()
 
     def run(self):
