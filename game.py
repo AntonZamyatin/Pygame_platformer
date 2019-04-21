@@ -15,12 +15,15 @@ class Game(object):
         # initialize pygame and create window
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("My Game")
+        pygame.display.set_caption("Cosmoplat")
         self.clock = pygame.time.Clock()
         self.running = True
-        self.spritesheet = Spritesheet(os.path.join(img_folder,
+        self.player_spritesheet = Spritesheet(os.path.join(img_folder,
                                                     "p1_spritesheet.png"))
-        self.ground = Platform(0, HEIGHT - 40, WIDTH, 40, self)
+
+        self.tiles_spritesheet = Spritesheet(os.path.join(img_folder,
+                                                    "tiles_spritesheet.png"))
+        self.ground = Platform(0, HEIGHT - 40, WIDTH, 40, self, 1)
 
     def new(self):
         # start a new game
@@ -28,7 +31,7 @@ class Game(object):
         self.player = Player(self)
         self.all_sprites.add(self.player)
 
-        self.lmap = Level_map(os.path.join(game_folder, "lvl1.txt"))
+        self.lmap = Level_map(os.path.join(game_folder, "lvl1.txt"), self)
         self.platforms = self.lmap.get_sprites()
 
 
@@ -48,7 +51,7 @@ class Game(object):
             self.all_sprites.update()
 
             # Draw / render
-            self.screen.fill(BLUE)
+            self.screen.fill (BLUE)
             self.platforms.draw(self.screen)
             self.all_sprites.draw(self.screen)
 

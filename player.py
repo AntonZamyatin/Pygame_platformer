@@ -26,12 +26,14 @@ class Player(pygame.sprite.Sprite):
         self.idle_frame = 0
         idle_list_rects = [(0, 191, 67, 95),
                            (67, 191, 67, 95)]
-        self.idle_list = self.game.spritesheet.get_image_list(idle_list_rects)
+        self.idle_list = self.game.player_spritesheet\
+                             .get_image_list(idle_list_rects)
+
         self.idle_list += [self.idle_list[0],
                            pygame.transform.flip(self.idle_list[1], True, False)]
 
     def load_image(self):
-        self.image = self.game.spritesheet.get_image(0, 0, 72, 95)
+        self.image = self.game.player_spritesheet.get_image(0, 0, 72, 95)
 
     def update(self):
 
@@ -49,8 +51,13 @@ class Player(pygame.sprite.Sprite):
         else:
             self.acc = vec(0, GRAVITY_ACC)
 
-        keys = pygame.key.get_pressed()
         if self.on_ground:
+            self.acc = vec(0, 0)
+        else:
+            self.acc = vec(0, GRAVITY_ACC)
+
+        keys = pygame.key.get_pressed()
+        if self.is_on_ground:
             if keys[pygame.K_LEFT] or keys[pygame.K_a]:
                 self.acc.x = -PLAYER_ACC
             if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
@@ -70,7 +77,6 @@ class Player(pygame.sprite.Sprite):
             self.vel.x = 0
         old_pos = self.pos
         new_pos = old_pos + self.vel + 0.5 * self.acc
-
         vec_len = int(sqrt((old_pos.x - new_pos.x)**2 + (old_pos.y - new_pos.y)**2)) + 1
         final_pos = vec(0, 0)
         for i in range(vec_len):
@@ -105,7 +111,6 @@ class Player(pygame.sprite.Sprite):
             self.on_ground = True
             self.vel.y = 0
             self.pos.y = cur_plat[0].rect.top + (cur_plat[0].pos.y - cur_plat[0].rect.centery)'''
-
 
         screen_offset = vec(0, 0)
 
