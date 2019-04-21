@@ -40,7 +40,7 @@ class Player(pygame.sprite.Sprite):
         if hit:
             self.on_ground = True
             self.vel.y = 0
-            self.pos.y = hit[0].rect.top
+            self.pos.y = hit[0].rect.top + (hit[0].pos.y - hit[0].rect.centery)
 
         keys = pygame.key.get_pressed()
         if self.on_ground:
