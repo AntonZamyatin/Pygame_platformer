@@ -26,7 +26,9 @@ class Player(pygame.sprite.Sprite):
         self.idle_frame = 0
         idle_list_rects = [(0, 191, 67, 95),
                            (67, 191, 67, 95)]
-        self.idle_list = self.game.player_spritesheet.get_image_list(idle_list_rects)
+        self.idle_list = self.game.player_spritesheet\
+                             .get_image_list(idle_list_rects)
+
         self.idle_list += [self.idle_list[0],
                            pygame.transform.flip(self.idle_list[1], True, False)]
 
@@ -38,8 +40,9 @@ class Player(pygame.sprite.Sprite):
         hit = self.is_on_ground()
         if hit:
             self.on_ground = True
-            #self.vel.y = 0
-            #self.pos.y = hit[0].rect.top + (hit[0].pos.y - hit[0].rect.centery)
+            self.vel.y = 0
+            self.pos.y = hit[0].rect.top + (hit[0].pos.y - hit[0].rect.centery)
+
 
         if self.on_ground:
             self.acc = vec(0, 0)
