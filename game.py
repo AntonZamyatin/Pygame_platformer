@@ -18,8 +18,10 @@ class Game(object):
         pygame.display.set_caption("My Game")
         self.clock = pygame.time.Clock()
         self.running = True
-        self.spritesheet = Spritesheet(os.path.join(img_folder,
+        self.player_spritesheet = Spritesheet(os.path.join(img_folder,
                                                     "p1_spritesheet.png"))
+        self.tiles_spritesheet = Spritesheet(os.path.join(img_folder,
+                                                    "tiles_spritesheet.png"))
         self.ground = Platform(0, HEIGHT - 40, WIDTH, 40, self)
 
     def new(self):
