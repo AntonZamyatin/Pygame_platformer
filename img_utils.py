@@ -5,14 +5,17 @@ class Spritesheet():
     def __init__(self, filename):
         self.spritesheet = pygame.image.load(filename).convert_alpha()
 
-    def get_image(self, x, y, width, height, koef_scale=1):
+    def get_image(self, x, y, width, height, new_size=None):
         # grab an image out of a larger spritesheet
         """image = pygame.Surface((width, height))
         image.blit(self.spritesheet, (0, 0), (x, y, width, height))
         image = pygame.transform.scale(image, (width // koef_scale,
                                                height // koef_scale))
         """
-        return self.spritesheet.subsurface(x, y, width, height)
+        image = self.spritesheet.subsurface(x, y, width, height)
+        if new_size:
+            image = pygame.transform.scale(image, new_size)
+        return image
 
     def get_image_list(self, rect_list):
         image_list = []
