@@ -35,22 +35,6 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
 
-        '''
-        self.rect.bottom = 120
-        platform = pygame.sprite.spritecollide(self, self.game.platforms, False)
-        if platform:
-            print(1)
-
-        hit = self.is_on_ground()
-        if hit:
-            self.on_ground = True
-        if self.on_ground:
-            print(2)
-        return  #   '''
-
-
-
-
         # check ground
         hit = self.is_on_ground()
         if hit:
