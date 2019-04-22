@@ -50,9 +50,12 @@ class Game(object):
             self.all_sprites.update()
 
             # Draw / render
-            self.screen.fill (BLUE)
+            screen = pygame.display.set_mode((800, 600))
+            background_image = pygame.image.load('fon_2.jpg')
+            screen.blit(background_image, (0, 0))
             self.platforms.draw(self.screen)
             self.all_sprites.draw(self.screen)
+            pygame.display.update()
 
             # *after* drawing everything, flip the display
             pygame.display.flip()
