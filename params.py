@@ -16,10 +16,12 @@ PLAYER_ACC = 0.001
 PLAYER_FRICTION = -0.005
 FALL_FRICTION = -0.002
 GRAVITY_ACC = 0.003
-CAM_X_ACC = 0.000002
+
+# Camera properties
+CAM_X_ACC = 0.00002
 CAM_Y_ACC = 0.00004
 CAM_X_FRICTION = -0.002
-CAM_Y_FRICTION = -0.003
+CAM_Y_FRICTION = -0.006
 
 game_folder = os.path.dirname(__file__)
 img_folder = os.path.join(game_folder, "img")

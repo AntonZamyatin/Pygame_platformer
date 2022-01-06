@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from platform import *
+from g_platform import *
 
 class Level_map():
     """Level matrices"""

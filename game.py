@@ -4,7 +4,7 @@ from params import *
 import numpy as np
 import pygame
 from player import *
-from platform import Platform
+from g_platform import Platform
 from img_utils import *
 from level_map import *
 
@@ -58,7 +58,7 @@ class Game(object):
             self.screen.fill (BLUE)
             self.platforms.draw(self.screen)
             self.all_sprites.draw(self.screen)
-            #self.screen.blit(self.foreground.image, self.foreground.rect)
+            self.screen.blit(self.foreground.image, self.foreground.rect)
 
             # *after* drawing everything, flip the display
             pygame.display.flip()
